@@ -7,16 +7,18 @@ import { usePathname } from 'next/navigation';
 export default function RootLayout({ children }) {
   const pathname = usePathname();
 
-  // Render Navbar only on /users and /posts pages
-  const shouldRenderNavbar = pathname === '/users' || pathname === '/posts';
 
-  // Apply padding conditionally based on the current path
-  const paddingClass = pathname === '/users' || pathname === '/posts' ? 'pt-20' : '';
+  const shouldRenderNavbar = pathname !== '/auth';
+
+  const paddingClass = 
+    pathname !== '/auth' && (pathname === '/users' || pathname === '/posts' || pathname === '/dashboard') 
+      ? 'pt-20' 
+      : '';  
 
   return (
     <html lang="en">
       <body className={paddingClass}>
-        {shouldRenderNavbar && <Navbar />}
+        {shouldRenderNavbar && <Navbar />} {/* Navbar will not show on '/auth' */}
         <main>{children}</main>
       </body>
     </html>

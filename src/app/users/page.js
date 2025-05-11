@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image'; 
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -53,6 +54,16 @@ export default function UsersPage() {
             onClick={() => handleUserClick(user)}
             className="cursor-pointer p-4 bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center"
           >
+            {/* Profile image in user list with next/image */}
+            <div className="flex justify-center mb-4">
+              <Image
+                src={`https://i.pravatar.cc/150?img=${user.id}`}
+                alt="User Avatar"
+                width={64}
+                height={64}
+                className="rounded-full object-cover"
+              />
+            </div>
             <h3 className="text-lg font-semibold text-gray-800">{user.name}</h3>
             <p className="text-sm text-gray-500">{user.username}</p>
           </div>
@@ -69,6 +80,16 @@ export default function UsersPage() {
             >
               ✕
             </button>
+            {/* Profile Image in the modal with next/image */}
+            <div className="flex justify-center mb-4">
+              <Image
+                src={`https://i.pravatar.cc/150?img=${selectedUser.id}`}
+                alt="User Avatar"
+                width={128}
+                height={128}
+                className="rounded-full object-cover"
+              />
+            </div>
             <h2 className="text-2xl font-bold mb-2">{selectedUser.name} Profile</h2>
             <p className="mb-4 text-gray-700">Email: {selectedUser.email}</p>
             <p className="mb-4 text-gray-700">
