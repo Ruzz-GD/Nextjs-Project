@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from 'next/image';  
+import Image from 'next/image';
 
 export default function PostsPage() {
   const [posts, setPosts] = useState([]);
@@ -60,7 +60,7 @@ export default function PostsPage() {
       (comment) => comment.postId === postId
     );
     setPostComments(relatedComments);
-    setSelectedPost(postId);
+    setSelectedPost(posts.find(post => post.id === postId));
   };
 
   const closeModal = () => {
@@ -105,7 +105,7 @@ export default function PostsPage() {
                 {/* Profile Image in top-left corner using next/image */}
                 <div className="absolute top-2 left-2 flex items-center space-x-2">
                   <Image
-                    src={`https://i.pravatar.cc/150?img=${postUser?.id || 1}`} // Using a random avatar generator for simplicity
+                    src={`https://i.pravatar.cc/150?img=${postUser?.id || 1}`}
                     alt="User Avatar"
                     width={40}
                     height={40}
@@ -134,34 +134,29 @@ export default function PostsPage() {
             >
               ✕
             </button>
-            <h2 className="text-2xl font-bold mb-2">{selectedPost?.title}</h2>
-            <p className="mb-4 text-gray-700">{selectedPost?.body}</p>
+            <h2 className="text-2xl font-bold mb-2">{selectedPost.title}</h2>
+            <p className="mb-4 text-gray-700">{selectedPost.body}</p>
 
             <h3 className="text-xl font-semibold mb-2">Comments</h3>
             {postComments.length > 0 ? (
               <ul className="space-y-4">
-                {postComments.map((comment) => {
-                  const commentUser = users.find((u) => u.id === comment.postId);
-
-                  return (
-                    <li key={comment.id} className="border-b pb-2">
-                      {/* Profile Image and Name in top-left of comment */}
-                      <div className="flex items-center space-x-2 mb-2">
-                        <Image
-                          src={`https://i.pravatar.cc/150?img=${commentUser?.id || 1}`} // Using a random avatar generator for simplicity
-                          alt="User Avatar"
-                          width={32}
-                          height={32}
-                          className="rounded-full object-cover"
-                        />
-                        <span className="font-medium text-gray-800">
-                          {commentUser?.name}
-                        </span>
-                      </div>
-                      <p className="text-gray-600">{comment.body}</p>
-                    </li>
-                  );
-                })}
+                {postComments.map((comment, index) => (
+                  <li key={comment.id} className="border-b pb-2">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Image
+                        src={`https://i.pravatar.cc/150?img=${(index % 70) + 1}`}
+                        alt="User Avatar"
+                        width={32}
+                        height={32}
+                        className="rounded-full object-cover"
+                      />
+                      <span className="font-medium text-gray-800">
+                        {comment.name}
+                      </span>
+                    </div>
+                    <p className="text-gray-600">{comment.body}</p>
+                  </li>
+                ))}
               </ul>
             ) : (
               <p>No comments available for this post.</p>
