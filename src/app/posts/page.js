@@ -137,24 +137,23 @@ export default function PostsPage() {
             <h2 className="text-2xl font-bold mb-2">{selectedPost.title}</h2>
             <p className="mb-4 text-gray-700">{selectedPost.body}</p>
 
-            <h3 className="text-xl font-semibold mb-2">Comments</h3>
+            <h3 className="text-xl font-semibold mb-4">Comments</h3>
             {postComments.length > 0 ? (
-              <ul className="space-y-4">
+              <ul className="space-y-6">
                 {postComments.map((comment, index) => (
-                  <li key={comment.id} className="border-b pb-2">
-                    <div className="flex items-center space-x-2 mb-2">
+                  <li key={comment.id} className="border-b pb-4">
+                    <div className="flex items-center space-x-3 mb-2">
                       <Image
                         src={`https://i.pravatar.cc/150?img=${(index % 70) + 1}`}
                         alt="User Avatar"
-                        width={32}
-                        height={32}
+                        width={40}
+                        height={40}
                         className="rounded-full object-cover"
                       />
-                      <span className="font-medium text-gray-800">
-                        {comment.name}
-                      </span>
+                      <span className="text-sm text-gray-600">{comment.email}</span>
                     </div>
-                    <p className="text-gray-600">{comment.body}</p>
+                    <p className="text-sm font-medium text-gray-800">{comment.name}</p>
+                    <p className="text-gray-700 mt-1">{comment.body}</p>
                   </li>
                 ))}
               </ul>
